@@ -1,15 +1,14 @@
 Import-Module VMware.VimAutomation.Core
 
 # Connect to vCenter Server
-$vcenter = "10.10.200.100"
+$vcenter = "Your vCenter"
 Connect-VIServer -Server $vcenter
 
 # Get cluster
-$clusterName = "CL-PROD-01"
+$clusterName = "Your Cluster"
 
 # Get datastores for cluster
 $datastores = Get-Cluster -Name $clusterName | Get-Datastore
-
 
 foreach ($datastore in $datastores) {
     # Get VMs by Datastore 
@@ -18,7 +17,7 @@ foreach ($datastore in $datastores) {
 
     foreach ($vm in $vms) {
         # Rename file
-        ls "vmstores:\$vcenter@443\DC-PARIS\$datastoreName\$vm" | rename-item -newname {$_.Name -replace "\.db$", ".db.bak"} 
+        ls "vmstores:\$vcenter@443\Datacenter\$datastoreName\$vm" | rename-item -newname {$_.Name -replace "\.db$", ".db.bak"} 
 
     }
 }
